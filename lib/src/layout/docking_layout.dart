@@ -442,9 +442,9 @@ class DockingTabs extends DockingParentArea with DropArea {
             weight: weight,
             minimalWeight: minimalWeight,
             minimalSize: minimalSize) {
-    if (this._children.length == 0) {
-      throw ArgumentError('DockingTabs cannot be empty');
-    }
+    // if (this._children.length == 0) {
+    //   throw ArgumentError('DockingTabs cannot be empty');
+    // }
   }
 
   final bool? maximizable;

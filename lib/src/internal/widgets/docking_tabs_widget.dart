@@ -92,8 +92,19 @@ class DockingTabsWidgetState extends State<DockingTabsWidget>
           draggable: widget.draggable));
     });
     TabbedViewController controller = TabbedViewController(tabs);
-    controller.selectedIndex =
-        math.min(widget.dockingTabs.selectedIndex, tabs.length - 1);
+     int initialIndex = widget.dockingTabs.selectedIndex;
+    if (initialIndex < 0 || initialIndex >= tabs.length) {
+      // If index is invalid (-1 from empty init, or out of bounds after removal), default to 0
+      initialIndex = 0;
+      // Optional: Update the model's index if it was out of sync
+      // WidgetsBinding.instance.addPostFrameCallback((_) {
+      //   if (widget.dockingTabs.selectedIndex != 0) {
+      //        widget.dockingTabs.selectedIndex = 0;
+      //        // Potentially notify layout listeners if needed
+      //   }
+      // });
+    }
+    controller.selectedIndex = initialIndex;
 
     Widget tabbedView = TabbedView(
         controller: controller,

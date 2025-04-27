@@ -436,6 +436,7 @@ class DockingTabs extends DockingParentArea with DropArea {
       double? minimalWeight,
       double? minimalSize})
       : this._maximized = maximized,
+      selectedIndex = children.isEmpty ? -1 : 0,
         super(children,
             id: id,
             size: size,
@@ -449,13 +450,19 @@ class DockingTabs extends DockingParentArea with DropArea {
 
   final bool? maximizable;
 
-  int selectedIndex = 0;
+  int selectedIndex;
   bool _maximized;
 
   bool get maximized => _maximized;
 
   @override
-  DockingItem childAt(int index) => _children[index] as DockingItem;
+  DockingItem childAt(int index) {
+     if (index < 0 || index >= _children.length) {
+       // This should ideally not happen if callers check childrenCount first
+       throw RangeError.index(index, _children, 'index', 'Index out of bounds for DockingTabs children');
+     }
+     return _children[index] as DockingItem;
+  }
 
   @override
   void forEach(void f(DockingItem child)) {

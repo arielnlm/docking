@@ -112,6 +112,10 @@ class _DockingState extends State<Docking> {
     } else if (area is DockingColumn) {
       return _column(context, area);
     } else if (area is DockingTabs) {
+      if (area.childrenCount == 0) {
+        // If the DockingTabs area has no children, return an empty container.
+        return Container(); // Or SizedBox.shrink();
+      }
       if (area.childrenCount == 1) {
         return DockingItemWidget(
             key: area.key,
